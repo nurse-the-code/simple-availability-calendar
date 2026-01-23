@@ -20,9 +20,15 @@ body {
 }
 
 .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 1.5rem;
-    text-align: center;
     border-bottom: 1px solid #e0e0e0;
+}
+
+.calendar-header-left {
+    text-align: left;
 }
 
 .calendar-title {
@@ -88,4 +94,39 @@ body {
 .day.no-data {
     background: #eeeeee;
     color: #757575;
+}
+
+.calendar-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+}
+
+.legend-color.available {
+    background: #c8e6c9;
+}
+
+.legend-color.partial {
+    background: #fff9c4;
+}
+
+.legend-color.unavailable {
+    background: #ffcdd2;
+}
+
+.legend-color.no-data {
+    background: #eeeeee;
 }
