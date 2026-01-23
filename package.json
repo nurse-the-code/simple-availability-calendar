@@ -1,0 +1,16 @@
+{
+  "name": "simple-calendar",
+  "version": "1.0.0",
+  "description": "A static availability calendar that runs locally without a server",
+  "type": "module",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": ["calendar", "availability", "static", "scheduling"],
+  "author": "Malachi Gruenhagen",
+  "license": "AGPL-3.0-only",
+  "packageManager": "pnpm@10.28.1",
+  "devDependencies": {
+    "vitest": "^4.0.18"
+  }
+}
