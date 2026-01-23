@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Availability Calendar</title>
+    <link rel="stylesheet" href="calendar.css">
+</head>
+<body>
+    <div class="calendar">
+        <header class="calendar-header">
+            <h1 class="calendar-title">My Availability</h1>
+            <div class="calendar-range-gregorian">January 25 – February 28, 2026</div>
+            <div class="calendar-range-hebrew">5 Shevat – 10 Adar 5786</div>
+        </header>
+
+        <div class="calendar-grid">
+            <div class="day-label">Sun</div>
+            <div class="day-label">Mon</div>
+            <div class="day-label">Tue</div>
+            <div class="day-label">Wed</div>
+            <div class="day-label">Thu</div>
+            <div class="day-label">Fri</div>
+            <div class="day-label">Sat</div>
+
+            <!-- Week 1: Jan 25-31 -->
+            <div class="day available">01-25</div>
+            <div class="day partial">01-26</div>
+            <div class="day unavailable">01-27</div>
+            <div class="day no-data">01-28</div>
+            <div class="day available">01-29</div>
+            <div class="day partial">01-30</div>
+            <div class="day unavailable">01-31</div>
+
+            <!-- Week 2: Feb 1-7 -->
+            <div class="day available">02-01</div>
+            <div class="day no-data">02-02</div>
+            <div class="day partial">02-03</div>
+            <div class="day available">02-04</div>
+            <div class="day unavailable">02-05</div>
+            <div class="day no-data">02-06</div>
+            <div class="day available">02-07</div>
+
+            <!-- Week 3: Feb 8-14 -->
+            <div class="day partial">02-08</div>
+            <div class="day available">02-09</div>
+            <div class="day available">02-10</div>
+            <div class="day unavailable">02-11</div>
+            <div class="day no-data">02-12</div>
+            <div class="day partial">02-13</div>
+            <div class="day available">02-14</div>
+
+            <!-- Week 4: Feb 15-21 -->
+            <div class="day no-data">02-15</div>
+            <div class="day available">02-16</div>
+            <div class="day partial">02-17</div>
+            <div class="day available">02-18</div>
+            <div class="day available">02-19</div>
+            <div class="day unavailable">02-20</div>
+            <div class="day no-data">02-21</div>
+
+            <!-- Week 5: Feb 22-28 -->
+            <div class="day available">02-22</div>
+            <div class="day partial">02-23</div>
+            <div class="day no-data">02-24</div>
+            <div class="day available">02-25</div>
+            <div class="day unavailable">02-26</div>
+            <div class="day partial">02-27</div>
+            <div class="day available">02-28</div>
+        </div>
+    </div>
+</body>
+</html>
