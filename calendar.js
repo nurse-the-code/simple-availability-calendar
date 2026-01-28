@@ -13,20 +13,33 @@ function initCalendar() {
   renderGrid();
 }
 
-initCalendar();
+if (typeof document !== 'undefined') {
+  initCalendar();
+}
 
 // =============================================================================
 // Date Formatters
 // =============================================================================
 
-export function formatShort(dateStr) {
-  // TODO: "2026-01-25" → "Jan 25"
+function formatShort(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 }
 
-export function formatLong(dateStr) {
-  // TODO: "2026-01-25" → "January 25"
+function formatLong(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
 }
 
-export function formatLongWithYear(dateStr) {
-  // TODO: "2026-01-25" → "January 25, 2026"
+function formatLongWithYear(dateStr) {
+  const [year, month, day] = dateStr.split('-').map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+// Export for testing (Node.js/Vitest environment)
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { formatShort, formatLong, formatLongWithYear };
 }

@@ -1,14 +1,20 @@
-import { describe } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { formatShort, formatLong, formatLongWithYear } from './calendar.js';
 
 describe('formatShort', () => {
-  // TODO: "2026-01-25" → "Jan 25"
+  it('formats "2026-01-25" as "Jan 25"', () => {
+    expect(formatShort('2026-01-25')).toBe('Jan 25');
+  });
 });
 
 describe('formatLong', () => {
-  // TODO: "2026-01-25" → "January 25"
+  it('formats "2026-01-25" as "January 25"', () => {
+    expect(formatLong('2026-01-25')).toBe('January 25');
+  });
 });
 
 describe('formatLongWithYear', () => {
-  // TODO: "2026-01-25" → "January 25, 2026"
+  it('formats "2026-01-25" as "January 25, 2026"', () => {
+    expect(formatLongWithYear('2026-01-25')).toBe('January 25, 2026');
+  });
 });
