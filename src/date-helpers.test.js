@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatShort, formatLong, formatLongWithYear } from './calendar.js';
+import { formatShort, formatLong, formatLongWithYear } from './date-helpers.js';
 
 describe('formatShort', () => {
   it('formats "2026-01-25" as "Jan 25"', () => {
