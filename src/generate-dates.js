@@ -23,8 +23,12 @@ function generateDates(startDate, endDate) {
  * @param {string} startDate - "YYYY-MM-DD"
  * @param {string} endDate - "YYYY-MM-DD"
  */
+function serializeDatesFile(data) {
+  return 'const CALENDAR_DATES = ' + JSON.stringify(data, null, 2) + ';\n';
+}
+
 function writeDatesFile(startDate, endDate) {}
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { generateDates, writeDatesFile };
+  module.exports = { generateDates, serializeDatesFile, writeDatesFile };
 }
