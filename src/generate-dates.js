@@ -24,7 +24,16 @@ function generateDates(startDate, endDate) {
  * @param {string} endDate - "YYYY-MM-DD"
  */
 function serializeDatesFile(data) {
-  return 'const CALENDAR_DATES = ' + JSON.stringify(data, null, 2) + ';\n';
+  const lines = [
+    'const CALENDAR_DATES = {',
+    `  startDate: "${data.startDate}",`,
+    `  endDate: "${data.endDate}",`,
+    '  days: {',
+    ...Object.keys(data.days).map(date => `    "${date}": {},`),
+    '  },',
+    '};',
+  ];
+  return lines.join('\n') + '\n';
 }
 
 function writeDatesFile(startDate, endDate) {}

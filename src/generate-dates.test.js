@@ -31,17 +31,17 @@ describe('generateDates', () => {
 });
 
 const serializedOneWeek = `const CALENDAR_DATES = {
-  "startDate": "2026-02-01",
-  "endDate": "2026-02-07",
-  "days": {
+  startDate: "2026-02-01",
+  endDate: "2026-02-07",
+  days: {
     "2026-02-01": {},
     "2026-02-02": {},
     "2026-02-03": {},
     "2026-02-04": {},
     "2026-02-05": {},
     "2026-02-06": {},
-    "2026-02-07": {}
-  }
+    "2026-02-07": {},
+  },
 };\n`;
 
 describe('serializeDatesFile', () => {
