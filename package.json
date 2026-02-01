@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A static availability calendar that runs locally without a server",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "generate-dates": "node src/generate-dates.js"
   },
   "keywords": ["calendar", "availability", "static", "scheduling"],
   "author": "Malachi Gruenhagen",
