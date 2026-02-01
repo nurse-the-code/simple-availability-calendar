@@ -1,4 +1,7 @@
 import { parseDate, formatYMD, padToSunday, padToSaturday } from './date-helpers.js';
+import { writeFileSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 /**
  * Generate a padded date range with an entry for each day.
@@ -36,7 +39,12 @@ function serializeDatesFile(data) {
   return lines.join('\n') + '\n';
 }
 
-function writeDatesFile(startDate, endDate) {}
+function writeDatesFile(startDate, endDate) {
+  const data = generateDates(startDate, endDate);
+  const content = serializeDatesFile(data);
+  const projectRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
+  writeFileSync(join(projectRoot, 'calendar-dates.js'), content);
+}
 
 if (typeof module !== "undefined" && module.exports) {
   module.exports = { generateDates, serializeDatesFile, writeDatesFile };

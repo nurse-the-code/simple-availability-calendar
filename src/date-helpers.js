@@ -47,7 +47,25 @@ function padToSaturday(date) {
   return d;
 }
 
+function validateDateRange(startDate, endDate) {
+  if (!startDate || !endDate) {
+    throw new Error('Usage: generate-dates <start-date> <end-date>');
+  }
+
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  if (!datePattern.test(startDate)) {
+    throw new Error(`Invalid start date: ${startDate}`);
+  }
+  if (!datePattern.test(endDate)) {
+    throw new Error(`Invalid end date: ${endDate}`);
+  }
+
+  if (parseDate(startDate) >= parseDate(endDate)) {
+    throw new Error('Start date must be before end date');
+  }
+}
+
 // Export for testing (Node.js/Vitest environment)
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { formatShort, formatLong, formatLongWithYear, parseDate, formatYMD, padToSunday, padToSaturday };
+  module.exports = { formatShort, formatLong, formatLongWithYear, parseDate, formatYMD, padToSunday, padToSaturday, validateDateRange };
 }
