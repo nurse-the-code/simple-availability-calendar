@@ -1,4 +1,15 @@
 // =============================================================================
+// Helpers
+// =============================================================================
+
+const VALID_STATUSES = ["available", "partial", "unavailable"];
+
+function availabilityClass(day) {
+  if (VALID_STATUSES.includes(day.status)) return day.status;
+  return "no-data";
+}
+
+// =============================================================================
 // Data merging
 // =============================================================================
 
@@ -6,6 +17,9 @@ function mergeCalendarData(dates, statuses) {
   const days = {};
   for (const dateStr of Object.keys(dates.days)) {
     days[dateStr] = {};
+    if (statuses.days[dateStr]?.status) {
+      days[dateStr].status = statuses.days[dateStr].status;
+    }
   }
   return {
     title: statuses.title || "Malachi's Availability Calendar",
@@ -63,7 +77,7 @@ function renderHeader() {
 
 function renderDay(dateStr) {
   const cell = document.createElement('div');
-  cell.className = 'day no-data';
+  cell.className = 'day ' + availabilityClass(CALENDAR_DATA.days[dateStr]);
   cell.textContent = formatShort(dateStr);
   return cell;
 }
@@ -89,6 +103,6 @@ if (typeof document !== 'undefined') {
 }
 
 if (typeof module !== 'undefined') {
-  module.exports = { mergeCalendarData };
+  module.exports = { mergeCalendarData, availabilityClass };
 }
 
