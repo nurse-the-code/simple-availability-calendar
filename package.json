@@ -4,7 +4,8 @@
   "description": "A static availability calendar that runs locally without a server",
   "scripts": {
     "test": "vitest",
-    "generate-dates": "node src/generate-dates.js"
+    "generate-dates": "node src/generate-dates.js",
+    "prepare": "husky"
   },
   "keywords": [
     "calendar",
@@ -15,7 +16,12 @@
   "author": "Malachi Gruenhagen",
   "license": "AGPL-3.0-only",
   "packageManager": "pnpm@10.28.1",
+  "lint-staged": {
+    "*.{js,html,css,md,json}": "prettier --write"
+  },
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "vitest": "^4.0.18"
   }
