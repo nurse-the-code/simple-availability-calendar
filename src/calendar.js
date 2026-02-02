@@ -1,4 +1,26 @@
-const CALENDAR_DATA = CALENDAR_DATES;
+// =============================================================================
+// Data merging
+// =============================================================================
+
+function mergeCalendarData(dates, statuses) {
+  const days = {};
+  for (const dateStr of Object.keys(dates.days)) {
+    days[dateStr] = {};
+  }
+  return {
+    title: statuses.title || "Malachi's Availability Calendar",
+    startDate: dates.startDate,
+    endDate: dates.endDate,
+    days,
+  };
+}
+
+if (typeof document !== 'undefined') {
+  var CALENDAR_DATA = mergeCalendarData(
+    CALENDAR_DATES,
+    typeof CALENDAR_STATUSES !== 'undefined' ? CALENDAR_STATUSES : { days: {} },
+  );
+}
 
 // =============================================================================
 // Components (render UI elements)
@@ -64,5 +86,9 @@ function initCalendar() {
 
 if (typeof document !== 'undefined') {
   initCalendar();
+}
+
+if (typeof module !== 'undefined') {
+  module.exports = { mergeCalendarData };
 }
 
