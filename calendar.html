@@ -1,40 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Availability Calendar</title>
-    <link rel="stylesheet" href="calendar.css">
-</head>
-<body>
+    <link rel="stylesheet" href="calendar.css" />
+  </head>
+  <body>
     <div class="calendar">
-        <header class="calendar-header">
-            <div class="calendar-header-left">
-                <h1 class="calendar-title"></h1>
-                <div class="calendar-range-gregorian"></div>
-                <div class="calendar-range-hebrew"></div>
-            </div>
-            <div class="calendar-legend">
-                <div class="legend-item"><span class="legend-color available"></span> Available</div>
-                <div class="legend-item"><span class="legend-color partial"></span> Limited availability</div>
-                <div class="legend-item"><span class="legend-color unavailable"></span> Unavailable</div>
-                <div class="legend-item"><span class="legend-color no-data"></span> Ask Malachi</div>
-            </div>
-        </header>
-
-        <div class="calendar-grid">
-            <div class="day-label">Sun</div>
-            <div class="day-label">Mon</div>
-            <div class="day-label">Tue</div>
-            <div class="day-label">Wed</div>
-            <div class="day-label">Thu</div>
-            <div class="day-label">Fri</div>
-            <div class="day-label">Sat</div>
+      <header class="calendar-header">
+        <div class="calendar-header-left">
+          <h1 class="calendar-title"></h1>
+          <div class="calendar-range-gregorian"></div>
+          <div class="calendar-range-hebrew"></div>
         </div>
+        <div class="calendar-legend">
+          <div class="legend-item">
+            <span class="legend-color available"></span> Available
+          </div>
+          <div class="legend-item">
+            <span class="legend-color partial"></span> Limited availability
+          </div>
+          <div class="legend-item">
+            <span class="legend-color unavailable"></span> Unavailable
+          </div>
+          <div class="legend-item">
+            <span class="legend-color no-data"></span> Ask Malachi
+          </div>
+        </div>
+      </header>
+
+      <div class="calendar-grid">
+        <div class="day-label">Sun</div>
+        <div class="day-label">Mon</div>
+        <div class="day-label">Tue</div>
+        <div class="day-label">Wed</div>
+        <div class="day-label">Thu</div>
+        <div class="day-label">Fri</div>
+        <div class="day-label">Sat</div>
+      </div>
     </div>
     <script src="calendar-dates.js"></script>
     <script src="calendar-statuses.js"></script>
     <script src="src/date-helpers.js"></script>
     <script src="src/calendar.js"></script>
-</body>
+  </body>
 </html>

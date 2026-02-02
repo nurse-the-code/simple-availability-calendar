@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
-import { mergeCalendarData, availabilityClass } from './calendar.js';
+import { describe, it, expect } from "vitest";
+import { mergeCalendarData, availabilityClass } from "./calendar.js";
 
-describe('mergeCalendarData', () => {
-  it('uses title from statuses, not dates', () => {
+describe("mergeCalendarData", () => {
+  it("uses title from statuses, not dates", () => {
     const dates = {
       title: "Dates Title",
       startDate: "2026-02-01",
@@ -14,7 +14,7 @@ describe('mergeCalendarData', () => {
     expect(result.title).toBe("My Availability");
   });
 
-  it('uses startDate and endDate from dates, not statuses', () => {
+  it("uses startDate and endDate from dates, not statuses", () => {
     const dates = {
       startDate: "2026-02-01",
       endDate: "2026-04-30",
@@ -31,7 +31,7 @@ describe('mergeCalendarData', () => {
     expect(result.endDate).toBe("2026-04-30");
   });
 
-  it('copies status from statuses into matching days', () => {
+  it("copies status from statuses into matching days", () => {
     const dates = {
       startDate: "2026-02-01",
       endDate: "2026-04-30",
@@ -49,7 +49,7 @@ describe('mergeCalendarData', () => {
     expect(result.days["2026-02-02"].status).toBe("unavailable");
   });
 
-  it('ignores status entries for dates not in the dates file', () => {
+  it("ignores status entries for dates not in the dates file", () => {
     const dates = {
       startDate: "2026-02-01",
       endDate: "2026-04-30",
@@ -67,7 +67,7 @@ describe('mergeCalendarData', () => {
     expect(result.days["2099-01-01"]).toBeUndefined();
   });
 
-  it('includes days from dates', () => {
+  it("includes days from dates", () => {
     const dates = {
       startDate: "2026-02-01",
       endDate: "2026-04-30",
@@ -79,7 +79,7 @@ describe('mergeCalendarData', () => {
   });
 });
 
-describe('availabilityClass', () => {
+describe("availabilityClass", () => {
   it('returns "no-data" when day has no status', () => {
     expect(availabilityClass({})).toBe("no-data");
   });

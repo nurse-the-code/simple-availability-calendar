@@ -29,10 +29,10 @@ function mergeCalendarData(dates, statuses) {
   };
 }
 
-if (typeof document !== 'undefined') {
+if (typeof document !== "undefined") {
   var CALENDAR_DATA = mergeCalendarData(
     CALENDAR_DATES,
-    typeof CALENDAR_STATUSES !== 'undefined' ? CALENDAR_STATUSES : { days: {} },
+    typeof CALENDAR_STATUSES !== "undefined" ? CALENDAR_STATUSES : { days: {} },
   );
 }
 
@@ -41,32 +41,33 @@ if (typeof document !== 'undefined') {
 // =============================================================================
 
 function renderTitle() {
-  document.querySelector('.calendar-title').textContent = CALENDAR_DATA.title;
+  document.querySelector(".calendar-title").textContent = CALENDAR_DATA.title;
 }
 
 function renderStartDate() {
-  const startTime = document.createElement('time');
-  startTime.setAttribute('datetime', CALENDAR_DATA.startDate);
+  const startTime = document.createElement("time");
+  startTime.setAttribute("datetime", CALENDAR_DATA.startDate);
   startTime.textContent = formatLong(CALENDAR_DATA.startDate);
   return startTime;
 }
 
 function renderEndDate() {
-  const endTime = document.createElement('time');
-  endTime.setAttribute('datetime', CALENDAR_DATA.endDate);
+  const endTime = document.createElement("time");
+  endTime.setAttribute("datetime", CALENDAR_DATA.endDate);
   endTime.textContent = formatLongWithYear(CALENDAR_DATA.endDate);
   return endTime;
 }
 
 function renderGregorianRange() {
-  const container = document.querySelector('.calendar-range-gregorian');
+  const container = document.querySelector(".calendar-range-gregorian");
   container.appendChild(renderStartDate());
-  container.appendChild(document.createTextNode(' – '));
+  container.appendChild(document.createTextNode(" – "));
   container.appendChild(renderEndDate());
 }
 
 function renderHebrewRange() {
-  document.querySelector('.calendar-range-hebrew').textContent = CALENDAR_DATA.hebrewRange;
+  document.querySelector(".calendar-range-hebrew").textContent =
+    CALENDAR_DATA.hebrewRange;
 }
 
 function renderHeader() {
@@ -76,14 +77,14 @@ function renderHeader() {
 }
 
 function renderDay(dateStr) {
-  const cell = document.createElement('div');
-  cell.className = 'day ' + availabilityClass(CALENDAR_DATA.days[dateStr]);
+  const cell = document.createElement("div");
+  cell.className = "day " + availabilityClass(CALENDAR_DATA.days[dateStr]);
   cell.textContent = formatShort(dateStr);
   return cell;
 }
 
 function renderGrid() {
-  const grid = document.querySelector('.calendar-grid');
+  const grid = document.querySelector(".calendar-grid");
   for (const dateStr of Object.keys(CALENDAR_DATA.days)) {
     grid.appendChild(renderDay(dateStr));
   }
@@ -98,11 +99,10 @@ function initCalendar() {
   renderGrid();
 }
 
-if (typeof document !== 'undefined') {
+if (typeof document !== "undefined") {
   initCalendar();
 }
 
-if (typeof module !== 'undefined') {
+if (typeof module !== "undefined") {
   module.exports = { mergeCalendarData, availabilityClass };
 }
-

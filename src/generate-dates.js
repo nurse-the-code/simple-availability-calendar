@@ -1,6 +1,12 @@
-const { parseDate, formatYMD, padToSunday, padToSaturday, validateDateRange } = require('./date-helpers.js');
-const { writeFileSync } = require('fs');
-const { join } = require('path');
+const {
+  parseDate,
+  formatYMD,
+  padToSunday,
+  padToSaturday,
+  validateDateRange,
+} = require("./date-helpers.js");
+const { writeFileSync } = require("fs");
+const { join } = require("path");
 
 /**
  * Generate a padded date range with an entry for each day.
@@ -27,26 +33,26 @@ function generateDates(startDate, endDate) {
  */
 function serializeDatesFile(data) {
   const lines = [
-    'const CALENDAR_DATES = {',
+    "const CALENDAR_DATES = {",
     `  startDate: "${data.startDate}",`,
     `  endDate: "${data.endDate}",`,
-    '  days: {',
-    ...Object.keys(data.days).map(date => `    "${date}": {},`),
-    '  },',
-    '};',
+    "  days: {",
+    ...Object.keys(data.days).map((date) => `    "${date}": {},`),
+    "  },",
+    "};",
   ];
-  return lines.join('\n') + '\n';
+  return lines.join("\n") + "\n";
 }
 
 function writeDatesFile(startDate, endDate) {
   const data = generateDates(startDate, endDate);
   const content = serializeDatesFile(data);
-  const projectRoot = join(__dirname, '..');
-  writeFileSync(join(projectRoot, 'calendar-dates.js'), content);
+  const projectRoot = join(__dirname, "..");
+  writeFileSync(join(projectRoot, "calendar-dates.js"), content);
 }
 
 // CLI entry point
-const [,, startArg, endArg] = process.argv;
+const [, , startArg, endArg] = process.argv;
 if (startArg || endArg) {
   try {
     validateDateRange(startArg, endArg);

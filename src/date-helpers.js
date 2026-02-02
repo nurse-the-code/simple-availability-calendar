@@ -1,30 +1,34 @@
 function formatShort(dateStr) {
-  const [year, month, day] = dateStr.split('-').map(Number);
+  const [year, month, day] = dateStr.split("-").map(Number);
   const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 function formatLong(dateStr) {
-  const [year, month, day] = dateStr.split('-').map(Number);
+  const [year, month, day] = dateStr.split("-").map(Number);
   const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  return date.toLocaleDateString("en-US", { month: "long", day: "numeric" });
 }
 
 function formatLongWithYear(dateStr) {
-  const [year, month, day] = dateStr.split('-').map(Number);
+  const [year, month, day] = dateStr.split("-").map(Number);
   const date = new Date(year, month - 1, day);
-  return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  return date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 function parseDate(dateStr) {
-  const [year, month, day] = dateStr.split('-').map(Number);
+  const [year, month, day] = dateStr.split("-").map(Number);
   return new Date(year, month - 1, day);
 }
 
 function formatYMD(date) {
   const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, "0");
+  const dd = String(date.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 }
 
@@ -49,7 +53,7 @@ function padToSaturday(date) {
 
 function validateDateRange(startDate, endDate) {
   if (!startDate || !endDate) {
-    throw new Error('Usage: generate-dates <start-date> <end-date>');
+    throw new Error("Usage: generate-dates <start-date> <end-date>");
   }
 
   const datePattern = /^\d{4}-\d{2}-\d{2}$/;
@@ -61,11 +65,20 @@ function validateDateRange(startDate, endDate) {
   }
 
   if (parseDate(startDate) >= parseDate(endDate)) {
-    throw new Error('Start date must be before end date');
+    throw new Error("Start date must be before end date");
   }
 }
 
 // Export for testing (Node.js/Vitest environment)
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { formatShort, formatLong, formatLongWithYear, parseDate, formatYMD, padToSunday, padToSaturday, validateDateRange };
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    formatShort,
+    formatLong,
+    formatLongWithYear,
+    parseDate,
+    formatYMD,
+    padToSunday,
+    padToSaturday,
+    validateDateRange,
+  };
 }

@@ -1,47 +1,56 @@
-import { describe, it, expect } from 'vitest';
-import { formatShort, formatLong, formatLongWithYear, parseDate, formatYMD, padToSunday, padToSaturday, validateDateRange } from './date-helpers.js';
+import { describe, it, expect } from "vitest";
+import {
+  formatShort,
+  formatLong,
+  formatLongWithYear,
+  parseDate,
+  formatYMD,
+  padToSunday,
+  padToSaturday,
+  validateDateRange,
+} from "./date-helpers.js";
 
-describe('formatShort', () => {
+describe("formatShort", () => {
   it('formats "2026-01-25" as "Jan 25"', () => {
-    expect(formatShort('2026-01-25')).toBe('Jan 25');
+    expect(formatShort("2026-01-25")).toBe("Jan 25");
   });
 });
 
-describe('formatLong', () => {
+describe("formatLong", () => {
   it('formats "2026-01-25" as "January 25"', () => {
-    expect(formatLong('2026-01-25')).toBe('January 25');
+    expect(formatLong("2026-01-25")).toBe("January 25");
   });
 });
 
-describe('formatLongWithYear', () => {
+describe("formatLongWithYear", () => {
   it('formats "2026-01-25" as "January 25, 2026"', () => {
-    expect(formatLongWithYear('2026-01-25')).toBe('January 25, 2026');
+    expect(formatLongWithYear("2026-01-25")).toBe("January 25, 2026");
   });
 });
 
-describe('parseDate', () => {
+describe("parseDate", () => {
   it('parses "2026-01-25" into a Date for January 25, 2026', () => {
-    const date = parseDate('2026-01-25');
+    const date = parseDate("2026-01-25");
     expect(date.getFullYear()).toBe(2026);
     expect(date.getMonth()).toBe(0);
     expect(date.getDate()).toBe(25);
   });
 });
 
-describe('formatYMD', () => {
+describe("formatYMD", () => {
   it('formats January 25, 2026 as "2026-01-25"', () => {
     const date = new Date(2026, 0, 25);
-    expect(formatYMD(date)).toBe('2026-01-25');
+    expect(formatYMD(date)).toBe("2026-01-25");
   });
 });
 
-describe('padToSunday', () => {
-  it('returns the same date when already Sunday', () => {
+describe("padToSunday", () => {
+  it("returns the same date when already Sunday", () => {
     const sunday = new Date(2026, 1, 1); // Feb 1 2026 is Sunday
     expect(padToSunday(sunday).getTime()).toBe(sunday.getTime());
   });
 
-  it('pads Friday back to Sunday', () => {
+  it("pads Friday back to Sunday", () => {
     const friday = new Date(2026, 1, 6); // Feb 6 2026 is Friday
     const result = padToSunday(friday);
     expect(result.getFullYear()).toBe(2026);
@@ -50,13 +59,13 @@ describe('padToSunday', () => {
   });
 });
 
-describe('padToSaturday', () => {
-  it('returns the same date when already Saturday', () => {
+describe("padToSaturday", () => {
+  it("returns the same date when already Saturday", () => {
     const saturday = new Date(2026, 1, 28); // Feb 28 2026 is Saturday
     expect(padToSaturday(saturday).getTime()).toBe(saturday.getTime());
   });
 
-  it('pads Monday forward to Saturday', () => {
+  it("pads Monday forward to Saturday", () => {
     const monday = new Date(2026, 1, 2); // Feb 2 2026 is Monday
     const result = padToSaturday(monday);
     expect(result.getFullYear()).toBe(2026);
@@ -65,28 +74,28 @@ describe('padToSaturday', () => {
   });
 });
 
-describe('validateDateRange', () => {
-  it('does not throw for a valid range', () => {
-    expect(() => validateDateRange('2026-01-25', '2026-02-28')).not.toThrow();
+describe("validateDateRange", () => {
+  it("does not throw for a valid range", () => {
+    expect(() => validateDateRange("2026-01-25", "2026-02-28")).not.toThrow();
   });
 
-  it('throws when start date is missing', () => {
-    expect(() => validateDateRange(undefined, '2026-02-28')).toThrow();
+  it("throws when start date is missing", () => {
+    expect(() => validateDateRange(undefined, "2026-02-28")).toThrow();
   });
 
-  it('throws when end date is missing', () => {
-    expect(() => validateDateRange('2026-01-25', undefined)).toThrow();
+  it("throws when end date is missing", () => {
+    expect(() => validateDateRange("2026-01-25", undefined)).toThrow();
   });
 
-  it('throws for invalid start date format', () => {
-    expect(() => validateDateRange('not-a-date', '2026-02-28')).toThrow();
+  it("throws for invalid start date format", () => {
+    expect(() => validateDateRange("not-a-date", "2026-02-28")).toThrow();
   });
 
-  it('throws for invalid end date format', () => {
-    expect(() => validateDateRange('2026-01-25', 'bad')).toThrow();
+  it("throws for invalid end date format", () => {
+    expect(() => validateDateRange("2026-01-25", "bad")).toThrow();
   });
 
-  it('throws when start date is after end date', () => {
-    expect(() => validateDateRange('2026-03-01', '2026-02-01')).toThrow();
+  it("throws when start date is after end date", () => {
+    expect(() => validateDateRange("2026-03-01", "2026-02-01")).toThrow();
   });
 });

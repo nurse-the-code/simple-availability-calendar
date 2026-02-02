@@ -1,132 +1,133 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f5f5f5;
-    padding: 2rem;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f5f5f5;
+  padding: 2rem;
 }
 
 .calendar {
-    max-width: 700px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem;
-    border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .calendar-header-left {
-    text-align: left;
+  text-align: left;
 }
 
 .calendar-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .calendar-range-gregorian {
-    color: #555;
-    font-size: 0.95rem;
+  color: #555;
+  font-size: 0.95rem;
 }
 
 .calendar-range-hebrew {
-    color: #777;
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
+  color: #777;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
 }
 
 .calendar-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 1px;
-    background: #e0e0e0;
-    padding: 1px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: #e0e0e0;
+  padding: 1px;
 }
 
 .day-label {
-    background: #f8f8f8;
-    padding: 0.75rem;
-    text-align: center;
-    font-weight: 600;
-    font-size: 0.85rem;
-    color: #555;
+  background: #f8f8f8;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #555;
 }
 
 .day {
-    background: white;
-    padding: 1rem;
-    text-align: center;
-    font-size: 0.9rem;
-    min-height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: white;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .day.available {
-    background: #c8e6c9;
-    color: #2e7d32;
+  background: #c8e6c9;
+  color: #2e7d32;
 }
 
 .day.partial {
-    background: #fff9c4;
-    color: #f9a825;
+  background: #fff9c4;
+  color: #f9a825;
 }
 
 .day.unavailable {
-    background: #ffcdd2;
-    color: #c62828;
+  background: #ffcdd2;
+  color: #c62828;
 }
 
 .day.no-data {
-    background: #eeeeee;
-    color: #757575;
+  background: #eeeeee;
+  color: #757575;
 }
 
 .calendar-legend {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    font-size: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.8rem;
 }
 
 .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .legend-color {
-    width: 14px;
-    height: 14px;
-    border-radius: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
 }
 
 .legend-color.available {
-    background: #c8e6c9;
+  background: #c8e6c9;
 }
 
 .legend-color.partial {
-    background: #fff9c4;
+  background: #fff9c4;
 }
 
 .legend-color.unavailable {
-    background: #ffcdd2;
+  background: #ffcdd2;
 }
 
 .legend-color.no-data {
-    background: #eeeeee;
+  background: #eeeeee;
 }

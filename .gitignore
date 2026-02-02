@@ -1,8 +1,10 @@
+# Dependencies
 node_modules/
-
-# Auto-generated cache file for AI coding tools
-CONTEXT_SNAPSHOT.md
 
 # Generated/user-edited data files
 calendar-dates.js
 calendar-statuses.js
+
+# AI tooling
+.claude/
+CONTEXT_SNAPSHOT.md
