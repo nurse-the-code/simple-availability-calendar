@@ -1,3 +1,5 @@
+const CALENDAR_DATA = CALENDAR_DATES;
+
 // =============================================================================
 // Components (render UI elements)
 // =============================================================================
@@ -37,8 +39,18 @@ function renderHeader() {
   renderHebrewRange();
 }
 
+function renderDay(dateStr) {
+  const cell = document.createElement('div');
+  cell.className = 'day no-data';
+  cell.textContent = formatShort(dateStr);
+  return cell;
+}
+
 function renderGrid() {
-  // TODO: Generate date cells from startDate and endDate
+  const grid = document.querySelector('.calendar-grid');
+  for (const dateStr of Object.keys(CALENDAR_DATA.days)) {
+    grid.appendChild(renderDay(dateStr));
+  }
 }
 
 // =============================================================================
