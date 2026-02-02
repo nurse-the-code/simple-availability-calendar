@@ -8,6 +8,8 @@ import {
   padToSunday,
   padToSaturday,
   validateDateRange,
+  isSaturday,
+  isFriday,
 } from "./date-helpers.js";
 
 describe("formatShort", () => {
@@ -71,6 +73,34 @@ describe("padToSaturday", () => {
     expect(result.getFullYear()).toBe(2026);
     expect(result.getMonth()).toBe(1);
     expect(result.getDate()).toBe(7);
+  });
+});
+
+describe("isSaturday", () => {
+  it("returns true for a Saturday", () => {
+    expect(isSaturday("2026-01-31")).toBe(true); // Jan 31 2026 is Saturday
+  });
+
+  it("returns false for a Friday", () => {
+    expect(isSaturday("2026-01-30")).toBe(false);
+  });
+
+  it("returns false for a Sunday", () => {
+    expect(isSaturday("2026-02-01")).toBe(false);
+  });
+});
+
+describe("isFriday", () => {
+  it("returns true for a Friday", () => {
+    expect(isFriday("2026-01-30")).toBe(true); // Jan 30 2026 is Friday
+  });
+
+  it("returns false for a Saturday", () => {
+    expect(isFriday("2026-01-31")).toBe(false);
+  });
+
+  it("returns false for a Thursday", () => {
+    expect(isFriday("2026-01-29")).toBe(false);
   });
 });
 

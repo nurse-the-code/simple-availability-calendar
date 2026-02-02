@@ -69,6 +69,14 @@ function validateDateRange(startDate, endDate) {
   }
 }
 
+function isSaturday(dateStr) {
+  return parseDate(dateStr).getDay() === 6;
+}
+
+function isFriday(dateStr) {
+  return parseDate(dateStr).getDay() === 5;
+}
+
 // Export for testing (Node.js/Vitest environment)
 if (typeof module !== "undefined" && module.exports) {
   module.exports = {
@@ -80,5 +88,7 @@ if (typeof module !== "undefined" && module.exports) {
     padToSunday,
     padToSaturday,
     validateDateRange,
+    isSaturday,
+    isFriday,
   };
 }

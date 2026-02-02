@@ -1,3 +1,9 @@
+// In the browser, date-helpers.js is loaded via script tag (globals).
+// In Node/Vitest, we need to require it explicitly.
+if (typeof require !== "undefined") {
+  var { isSaturday, isFriday } = require("./date-helpers.js");
+}
+
 // =============================================================================
 // Helpers
 // =============================================================================
@@ -19,6 +25,12 @@ function mergeCalendarData(dates, statuses) {
     days[dateStr] = {};
     if (statuses.days[dateStr]?.status) {
       days[dateStr].status = statuses.days[dateStr].status;
+    }
+
+    if (isSaturday(dateStr)) {
+      days[dateStr].status = "unavailable";
+    } else if (isFriday(dateStr) && days[dateStr].status === "available") {
+      days[dateStr].status = "partial";
     }
   }
   return {

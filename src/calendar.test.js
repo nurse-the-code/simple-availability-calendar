@@ -67,6 +67,84 @@ describe("mergeCalendarData", () => {
     expect(result.days["2099-01-01"]).toBeUndefined();
   });
 
+  it("overrides Saturday user status 'available' to 'unavailable'", () => {
+    const dates = {
+      startDate: "2026-01-25",
+      endDate: "2026-01-31",
+      days: { "2026-01-31": {} }, // Saturday
+    };
+    const statuses = {
+      title: "Test",
+      days: { "2026-01-31": { status: "available" } },
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-01-31"].status).toBe("unavailable");
+  });
+
+  it("overrides Saturday user status 'partial' to 'unavailable'", () => {
+    const dates = {
+      startDate: "2026-01-25",
+      endDate: "2026-01-31",
+      days: { "2026-01-31": {} },
+    };
+    const statuses = {
+      title: "Test",
+      days: { "2026-01-31": { status: "partial" } },
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-01-31"].status).toBe("unavailable");
+  });
+
+  it("marks Saturday as unavailable even with no user status", () => {
+    const dates = {
+      startDate: "2026-01-25",
+      endDate: "2026-01-31",
+      days: { "2026-01-31": {} },
+    };
+    const statuses = { title: "Test", days: {} };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-01-31"].status).toBe("unavailable");
+  });
+
+  it("downgrades Friday user status 'available' to 'partial'", () => {
+    const dates = {
+      startDate: "2026-01-25",
+      endDate: "2026-01-31",
+      days: { "2026-01-30": {} }, // Friday
+    };
+    const statuses = {
+      title: "Test",
+      days: { "2026-01-30": { status: "available" } },
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-01-30"].status).toBe("partial");
+  });
+
+  it("keeps Friday user status 'unavailable' unchanged", () => {
+    const dates = {
+      startDate: "2026-01-25",
+      endDate: "2026-01-31",
+      days: { "2026-01-30": {} }, // Friday
+    };
+    const statuses = {
+      title: "Test",
+      days: { "2026-01-30": { status: "unavailable" } },
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-01-30"].status).toBe("unavailable");
+  });
+
+  it("leaves Friday with no user status as no status", () => {
+    const dates = {
+      startDate: "2026-01-25",
+      endDate: "2026-01-31",
+      days: { "2026-01-30": {} }, // Friday
+    };
+    const statuses = { title: "Test", days: {} };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-01-30"].status).toBeUndefined();
+  });
+
   it("includes days from dates", () => {
     const dates = {
       startDate: "2026-02-01",
