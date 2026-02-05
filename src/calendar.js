@@ -123,6 +123,7 @@ function renderHeader() {
 function renderDay(dateStr) {
   const cell = document.createElement("div");
   cell.className = "day " + availabilityClass(CALENDAR_DATA.days[dateStr]);
+  cell.dataset.date = dateStr;
   cell.textContent = formatShort(dateStr);
   return cell;
 }
@@ -135,12 +136,75 @@ function renderGrid() {
 }
 
 // =============================================================================
+// Tooltips
+// =============================================================================
+
+function buildTooltipContent(dateStr) {
+  const day = CALENDAR_DATA.days[dateStr];
+
+  const container = document.createElement("div");
+  container.className = "tooltip-content";
+
+  const dateEl = document.createElement("div");
+  dateEl.className = "tooltip-date";
+  dateEl.textContent = formatFullDate(dateStr);
+  container.appendChild(dateEl);
+
+  if (day.notes) {
+    const notesEl = document.createElement("div");
+    notesEl.className = "tooltip-notes";
+    notesEl.textContent = day.notes;
+    container.appendChild(notesEl);
+  }
+
+  return container;
+}
+
+function initTooltips() {
+  const grid = document.querySelector(".calendar-grid");
+  const tooltip = document.createElement("div");
+  tooltip.className = "tooltip";
+  tooltip.hidden = true;
+  document.body.appendChild(tooltip);
+
+  grid.addEventListener(
+    "mouseenter",
+    (e) => {
+      const cell = e.target.closest(".day[data-date]");
+      if (!cell) return;
+
+      const dateStr = cell.dataset.date;
+
+      tooltip.innerHTML = "";
+      tooltip.appendChild(buildTooltipContent(dateStr));
+
+      const rect = cell.getBoundingClientRect();
+      tooltip.style.left = rect.left + rect.width / 2 + "px";
+      tooltip.style.top = rect.bottom + 8 + "px";
+      tooltip.hidden = false;
+    },
+    true,
+  );
+
+  grid.addEventListener(
+    "mouseleave",
+    (e) => {
+      const cell = e.target.closest(".day[data-date]");
+      if (!cell) return;
+      tooltip.hidden = true;
+    },
+    true,
+  );
+}
+
+// =============================================================================
 // Initialization
 // =============================================================================
 
 function initCalendar() {
   renderHeader();
   renderGrid();
+  initTooltips();
 }
 
 if (typeof document !== "undefined") {

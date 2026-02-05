@@ -131,3 +131,30 @@ body {
 .legend-color.no-data {
   background: #eeeeee;
 }
+
+.tooltip {
+  position: fixed;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.tooltip[hidden] {
+  display: none;
+}
+
+.tooltip-date {
+  font-weight: 600;
+}
+
+.tooltip-notes {
+  margin-top: 0.25rem;
+  font-style: italic;
+  opacity: 0.9;
+}
