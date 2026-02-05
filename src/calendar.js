@@ -10,9 +10,22 @@ if (typeof require !== "undefined") {
 
 const VALID_STATUSES = ["available", "partial", "unavailable"];
 
+const LEGEND_LABELS = {
+  available: "Available",
+  partial: "Limited availability",
+  unavailable: "Unavailable",
+  "no-data": "Ask Malachi",
+};
+
+const LEGEND_ORDER = ["available", "partial", "unavailable", "no-data"];
+
 function availabilityClass(day) {
   if (VALID_STATUSES.includes(day.status)) return day.status;
   return "no-data";
+}
+
+function collectStatuses(days) {
+  return new Set(Object.values(days).map(availabilityClass));
 }
 
 // =============================================================================
@@ -82,10 +95,26 @@ function renderHebrewRange() {
     CALENDAR_DATA.hebrewRange;
 }
 
+function renderLegend() {
+  const legend = document.querySelector(".calendar-legend");
+  const statuses = collectStatuses(CALENDAR_DATA.days);
+  for (const status of LEGEND_ORDER) {
+    if (!statuses.has(status)) continue;
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    const color = document.createElement("span");
+    color.className = "legend-color " + status;
+    item.appendChild(color);
+    item.appendChild(document.createTextNode(" " + LEGEND_LABELS[status]));
+    legend.appendChild(item);
+  }
+}
+
 function renderHeader() {
   renderTitle();
   renderGregorianRange();
   renderHebrewRange();
+  renderLegend();
 }
 
 function renderDay(dateStr) {
@@ -116,5 +145,5 @@ if (typeof document !== "undefined") {
 }
 
 if (typeof module !== "undefined") {
-  module.exports = { mergeCalendarData, availabilityClass };
+  module.exports = { mergeCalendarData, availabilityClass, collectStatuses };
 }

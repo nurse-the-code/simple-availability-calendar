@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { mergeCalendarData, availabilityClass } from "./calendar.js";
+import {
+  mergeCalendarData,
+  availabilityClass,
+  collectStatuses,
+} from "./calendar.js";
 
 describe("mergeCalendarData", () => {
   it("uses title from statuses, not dates", () => {
@@ -176,5 +180,44 @@ describe("availabilityClass", () => {
 
   it('returns "no-data" for an unrecognized status', () => {
     expect(availabilityClass({ status: "banana" })).toBe("no-data");
+  });
+});
+
+describe("collectStatuses", () => {
+  it("returns empty set when there are no days", () => {
+    expect(collectStatuses({})).toEqual(new Set());
+  });
+
+  it("returns a single valid status", () => {
+    const days = { "2026-02-02": { status: "available" } };
+    expect(collectStatuses(days)).toEqual(new Set(["available"]));
+  });
+
+  it("returns multiple different statuses", () => {
+    const days = {
+      "2026-02-01": { status: "available" },
+      "2026-02-02": { status: "unavailable" },
+    };
+    expect(collectStatuses(days)).toEqual(
+      new Set(["available", "unavailable"]),
+    );
+  });
+
+  it("deduplicates repeated statuses", () => {
+    const days = {
+      "2026-02-01": { status: "available" },
+      "2026-02-02": { status: "available" },
+      "2026-02-03": { status: "partial" },
+    };
+    expect(collectStatuses(days)).toEqual(new Set(["available", "partial"]));
+  });
+
+  it("returns 'no-data' for days without a status", () => {
+    expect(collectStatuses({ "2026-02-01": {} })).toEqual(new Set(["no-data"]));
+  });
+
+  it("treats unrecognized statuses as 'no-data'", () => {
+    const days = { "2026-02-01": { status: "banana" } };
+    expect(collectStatuses(days)).toEqual(new Set(["no-data"]));
   });
 });
