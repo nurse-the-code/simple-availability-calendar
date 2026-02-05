@@ -3,6 +3,7 @@ import {
   formatShort,
   formatLong,
   formatLongWithYear,
+  formatFullDate,
   parseDate,
   formatYMD,
   padToSunday,
@@ -127,5 +128,15 @@ describe("validateDateRange", () => {
 
   it("throws when start date is after end date", () => {
     expect(() => validateDateRange("2026-03-01", "2026-02-01")).toThrow();
+  });
+});
+
+describe("formatFullDate", () => {
+  it('formats "2026-01-25" as "Sunday, January 25, 2026"', () => {
+    expect(formatFullDate("2026-01-25")).toBe("Sunday, January 25, 2026");
+  });
+
+  it('formats "2026-02-28" as "Saturday, February 28, 2026"', () => {
+    expect(formatFullDate("2026-02-28")).toBe("Saturday, February 28, 2026");
   });
 });

@@ -20,6 +20,17 @@ function formatLongWithYear(dateStr) {
   });
 }
 
+function formatFullDate(dateStr) {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 function parseDate(dateStr) {
   const [year, month, day] = dateStr.split("-").map(Number);
   return new Date(year, month - 1, day);
@@ -83,6 +94,7 @@ if (typeof module !== "undefined" && module.exports) {
     formatShort,
     formatLong,
     formatLongWithYear,
+    formatFullDate,
     parseDate,
     formatYMD,
     padToSunday,
