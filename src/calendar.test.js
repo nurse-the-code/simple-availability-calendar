@@ -159,6 +159,24 @@ describe("mergeCalendarData", () => {
     const result = mergeCalendarData(dates, statuses);
     expect(Object.keys(result.days)).toEqual(["2026-02-01", "2026-02-02"]);
   });
+
+  it("copies notes from statuses into matching days", () => {
+    const dates = {
+      startDate: "2026-02-01",
+      endDate: "2026-04-30",
+      days: { "2026-02-01": {}, "2026-02-02": {} },
+    };
+    const statuses = {
+      title: "My Availability",
+      days: {
+        "2026-02-01": { status: "available", notes: "Free all day" },
+        "2026-02-02": { status: "partial" },
+      },
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-02-01"].notes).toBe("Free all day");
+    expect(result.days["2026-02-02"].notes).toBeUndefined();
+  });
 });
 
 describe("availabilityClass", () => {

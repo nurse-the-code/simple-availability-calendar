@@ -39,6 +39,9 @@ function mergeCalendarData(dates, statuses) {
     if (statuses.days[dateStr]?.status) {
       days[dateStr].status = statuses.days[dateStr].status;
     }
+    if (statuses.days[dateStr]?.notes) {
+      days[dateStr].notes = statuses.days[dateStr].notes;
+    }
 
     if (isSaturday(dateStr)) {
       days[dateStr].status = "unavailable";
