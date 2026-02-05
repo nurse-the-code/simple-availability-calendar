@@ -35,7 +35,7 @@ function collectStatuses(days) {
 function mergeCalendarData(dates, statuses) {
   const days = {};
   for (const dateStr of Object.keys(dates.days)) {
-    days[dateStr] = {};
+    days[dateStr] = { hebrew: dates.days[dateStr].hebrew };
     if (statuses.days[dateStr]?.status) {
       days[dateStr].status = statuses.days[dateStr].status;
     }
@@ -53,6 +53,7 @@ function mergeCalendarData(dates, statuses) {
     title: statuses.title || "Malachi's Availability Calendar",
     startDate: dates.startDate,
     endDate: dates.endDate,
+    hebrewRange: dates.hebrewRange,
     days,
   };
 }
@@ -139,22 +140,36 @@ function renderGrid() {
 // Tooltips
 // =============================================================================
 
+function tooltipDate(dateStr) {
+  const el = document.createElement("div");
+  el.className = "tooltip-date";
+  el.textContent = formatFullDate(dateStr);
+  return el;
+}
+
+function tooltipHebrewDate(hebrew) {
+  const el = document.createElement("div");
+  el.className = "tooltip-hebrew";
+  el.textContent = hebrew;
+  return el;
+}
+
+function tooltipNotes(notes) {
+  const el = document.createElement("div");
+  el.className = "tooltip-notes";
+  el.textContent = notes;
+  return el;
+}
+
 function buildTooltipContent(dateStr) {
   const day = CALENDAR_DATA.days[dateStr];
 
   const container = document.createElement("div");
   container.className = "tooltip-content";
-
-  const dateEl = document.createElement("div");
-  dateEl.className = "tooltip-date";
-  dateEl.textContent = formatFullDate(dateStr);
-  container.appendChild(dateEl);
-
+  container.appendChild(tooltipDate(dateStr));
+  container.appendChild(tooltipHebrewDate(day.hebrew));
   if (day.notes) {
-    const notesEl = document.createElement("div");
-    notesEl.className = "tooltip-notes";
-    notesEl.textContent = day.notes;
-    container.appendChild(notesEl);
+    container.appendChild(tooltipNotes(day.notes));
   }
 
   return container;

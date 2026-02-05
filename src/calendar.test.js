@@ -160,6 +160,65 @@ describe("mergeCalendarData", () => {
     expect(Object.keys(result.days)).toEqual(["2026-02-01", "2026-02-02"]);
   });
 
+  it("passes through hebrew from dates for each day", () => {
+    const dates = {
+      startDate: "2026-02-01",
+      endDate: "2026-02-02",
+      hebrewRange: "14 Sh'vat 5786 – 15 Sh'vat 5786",
+      days: {
+        "2026-02-01": { hebrew: "14 Sh'vat 5786" },
+        "2026-02-02": { hebrew: "15 Sh'vat 5786" },
+      },
+    };
+    const statuses = { title: "Test", days: {} };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-02-01"].hebrew).toBe("14 Sh'vat 5786");
+    expect(result.days["2026-02-02"].hebrew).toBe("15 Sh'vat 5786");
+  });
+
+  it("passes through hebrewRange from dates", () => {
+    const dates = {
+      startDate: "2026-02-01",
+      endDate: "2026-02-02",
+      hebrewRange: "14 Sh'vat 5786 – 15 Sh'vat 5786",
+      days: { "2026-02-01": {}, "2026-02-02": {} },
+    };
+    const statuses = { title: "Test", days: {} };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.hebrewRange).toBe("14 Sh'vat 5786 – 15 Sh'vat 5786");
+  });
+
+  it("uses hebrew from dates, not statuses", () => {
+    const dates = {
+      startDate: "2026-02-01",
+      endDate: "2026-02-01",
+      hebrewRange: "14 Sh'vat 5786 – 14 Sh'vat 5786",
+      days: { "2026-02-01": { hebrew: "14 Sh'vat 5786" } },
+    };
+    const statuses = {
+      title: "Test",
+      days: { "2026-02-02": { hebrew: "15 Sh'vat 5786" } },
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.days["2026-02-01"].hebrew).toBe("14 Sh'vat 5786");
+  });
+
+  it("uses hebrewRange from dates, not statuses", () => {
+    const dates = {
+      startDate: "2026-02-01",
+      endDate: "2026-02-02",
+      hebrewRange: "14 Sh'vat 5786 – 15 Sh'vat 5786",
+      days: { "2026-02-01": {}, "2026-02-02": {} },
+    };
+    const statuses = {
+      title: "Test",
+      hebrewRange: "1 Nisan 5786 – 2 Nisan 5786",
+      days: {},
+    };
+    const result = mergeCalendarData(dates, statuses);
+    expect(result.hebrewRange).toBe("14 Sh'vat 5786 – 15 Sh'vat 5786");
+  });
+
   it("copies notes from statuses into matching days", () => {
     const dates = {
       startDate: "2026-02-01",

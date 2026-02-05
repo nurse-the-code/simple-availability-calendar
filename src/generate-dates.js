@@ -5,6 +5,10 @@ const {
   padToSaturday,
   validateDateRange,
 } = require("./date-helpers.js");
+const {
+  formatHebrewDate,
+  formatHebrewRange,
+} = require("./hebrew-date-helpers.js");
 const { writeFileSync } = require("fs");
 const { join } = require("path");
 
@@ -14,16 +18,28 @@ const { join } = require("path");
  * @param {string} endDate - "YYYY-MM-DD"
  * @returns {{ startDate: string, endDate: string, days: Object.<string, {}> }}
  */
-function generateDates(startDate, endDate) {
+async function generateDates(startDate, endDate) {
   const start = padToSunday(parseDate(startDate));
   const end = padToSaturday(parseDate(endDate));
 
   const days = {};
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-    days[formatYMD(d)] = {};
+    const key = formatYMD(d);
+    days[key] = { hebrew: await formatHebrewDate(key) };
   }
 
-  return { startDate: formatYMD(start), endDate: formatYMD(end), days };
+  const dayKeys = Object.keys(days);
+  const hebrewRange = formatHebrewRange(
+    days[dayKeys[0]].hebrew,
+    days[dayKeys[dayKeys.length - 1]].hebrew,
+  );
+
+  return {
+    startDate: formatYMD(start),
+    endDate: formatYMD(end),
+    hebrewRange,
+    days,
+  };
 }
 
 /**
@@ -31,21 +47,28 @@ function generateDates(startDate, endDate) {
  * @param {string} startDate - "YYYY-MM-DD"
  * @param {string} endDate - "YYYY-MM-DD"
  */
+function serializeDays(days) {
+  return Object.entries(days).map(
+    ([date, day]) => `    "${date}": { hebrew: "${day.hebrew}" },`,
+  );
+}
+
 function serializeDatesFile(data) {
   const lines = [
     "const CALENDAR_DATES = {",
     `  startDate: "${data.startDate}",`,
     `  endDate: "${data.endDate}",`,
+    `  hebrewRange: "${data.hebrewRange}",`,
     "  days: {",
-    ...Object.keys(data.days).map((date) => `    "${date}": {},`),
+    ...serializeDays(data.days),
     "  },",
     "};",
   ];
   return lines.join("\n") + "\n";
 }
 
-function writeDatesFile(startDate, endDate) {
-  const data = generateDates(startDate, endDate);
+async function writeDatesFile(startDate, endDate) {
+  const data = await generateDates(startDate, endDate);
   const content = serializeDatesFile(data);
   const projectRoot = join(__dirname, "..");
   writeFileSync(join(projectRoot, "calendar-dates.js"), content);

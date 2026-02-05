@@ -153,6 +153,11 @@ body {
   font-weight: 600;
 }
 
+.tooltip-hebrew {
+  opacity: 0.85;
+  font-size: 0.8rem;
+}
+
 .tooltip-notes {
   margin-top: 0.25rem;
   font-style: italic;
