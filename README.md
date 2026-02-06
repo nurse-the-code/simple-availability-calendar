@@ -19,14 +19,14 @@ I built this to give freelance and consulting clients a clear, at-a-glance pictu
 
 ## Usage
 
-Generate the date range:
+You'll need [pnpm](https://pnpm.io/installation) installed. Once you have it, install dependencies and generate the date range you want to display:
 
 ```bash
 pnpm install
-pnpm generate-dates 2026-02-01 2026-04-04
+pnpm generate-dates 2026-02-01 2026-04-04  # YYYY-MM-DD format
 ```
 
-Then create your statuses file by copying the example:
+Next, create your statuses file by copying the example:
 
 ```bash
 cp calendar-statuses.example.js calendar-statuses.js
@@ -34,7 +34,7 @@ cp calendar-statuses.example.js calendar-statuses.js
 
 Edit `calendar-statuses.js` to fill in your availability. The example file shows the format for each status type and how to add notes. The generated `calendar-dates.js` and your `calendar-statuses.js` are both gitignored, so your personal data won't be committed.
 
-Then open `calendar.html` in a browser. No server needed.
+Finally, open `calendar.html` in a browser. No server needed.
 
 ## Design decisions
 
@@ -66,11 +66,11 @@ Then open `calendar.html` in a browser. No server needed.
 
 ## Inspiration
 
-This project was inspired by two things from Basecamp's [dot grid calendar case study](https://basecamp.com/shapeup/1.1-chapter-02#case-study-the-dot-grid-calendar):
+This project was inspired by three things from Basecamp's [dot grid calendar case study](https://basecamp.com/shapeup/1.1-chapter-02#case-study-the-dot-grid-calendar):
 
 - **The design.** The dot grid calendar communicates one thing per day — whether there's an event — across multiple weeks at a glance. I wanted the same idea for availability: a multi-week view where someone can immediately see when I'm free.
 - **The complexity.** Basecamp is upfront about how hard calendars are to build. If a well-established software company has to make serious tradeoffs to ship one, I knew I'd need to be even more deliberate about scoping mine.
-- **The process.** The case study comes from [Shape Up](https://basecamp.com/shapeup), a book about how Basecamp builds software: set a firm deadline, then cut scope to fit rather than expanding the timeline. I treated this as a two-week project, broke the work into seven slices that each delivered a complete feature, and used test-driven development throughout.
+- **The process.** The case study comes from [Shape Up](https://basecamp.com/shapeup), a book about how Basecamp builds software: set a firm deadline, then cut scope to fit rather than expanding the timeline. I treated this as a two-week project, broke the work into several slices that each delivered a complete feature, and used test-driven development throughout.
 
 ## Stack
 
@@ -78,6 +78,7 @@ This project was inspired by two things from Basecamp's [dot grid calendar case 
 - [Prettier](https://prettier.io/) — code formatting
 - [Husky](https://typicode.github.io/husky/) — pre-commit hooks
 - [@hebcal/core](https://github.com/hebcal/hebcal-es6) — Hebrew date calculation (build-time only)
+- [pnpm](https://pnpm.io/installation) — package manager
 - Vanilla JavaScript, CSS Grid, HTML
 
 ## License
