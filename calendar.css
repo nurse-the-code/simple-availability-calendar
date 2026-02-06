@@ -133,7 +133,7 @@ body {
     "Courier New", monospace;
   background: var(--bg);
   color: var(--text);
-  padding: 2rem;
+  padding: clamp(0.5rem, 3vw, 2rem);
 }
 
 /* ==========================================================================
@@ -157,7 +157,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
   border-bottom: 1px solid var(--border);
 }
 
@@ -166,7 +166,7 @@ body {
 }
 
 .calendar-title {
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 1.5vw + 0.6rem, 1.6rem);
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 0.04em;
@@ -174,13 +174,13 @@ body {
 
 .calendar-range-gregorian {
   color: var(--text-dim);
-  font-size: 0.85rem;
+  font-size: clamp(0.7rem, 1vw + 0.35rem, 0.95rem);
   margin-top: 0.4rem;
 }
 
 .calendar-range-hebrew {
   color: var(--text-dim);
-  font-size: 0.75rem;
+  font-size: clamp(0.6rem, 0.8vw + 0.3rem, 0.85rem);
   margin-top: 0.2rem;
 }
 
@@ -222,17 +222,17 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 3px;
+  gap: clamp(1px, 0.4vw, 3px);
   background: var(--border-dim);
-  padding: 3px;
+  padding: clamp(1px, 0.4vw, 3px);
 }
 
 .day-label {
   background: var(--surface-dim);
-  padding: 0.75rem;
+  padding: clamp(0.35rem, 1.5vw, 0.75rem);
   text-align: center;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: clamp(0.6rem, 0.8vw + 0.3rem, 0.85rem);
   color: var(--text-dim);
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -244,10 +244,10 @@ body {
 
 .day {
   background: var(--surface);
-  padding: 1rem;
+  padding: clamp(0.4rem, 1.5vw, 1rem);
   text-align: center;
-  font-size: 0.85rem;
-  min-height: 60px;
+  font-size: clamp(0.7rem, 1vw + 0.35rem, 1rem);
+  min-height: clamp(38px, 8vw, 64px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -294,7 +294,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-size: 0.75rem;
+  font-size: clamp(0.65rem, 0.8vw + 0.3rem, 0.85rem);
 }
 
 .legend-item {
@@ -335,9 +335,10 @@ body {
   background: var(--tooltip-bg);
   color: var(--tooltip-text);
   border: 1px solid var(--tooltip-border);
-  padding: 0.5rem 0.75rem;
+  padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.4rem, 1.5vw, 0.75rem);
   font-family: inherit;
-  font-size: 0.8rem;
+  font-size: clamp(0.65rem, 0.8vw + 0.35rem, 0.85rem);
+  max-width: calc(100vw - 1rem);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   pointer-events: none;
@@ -353,11 +354,61 @@ body {
 }
 
 .tooltip-hebrew {
-  font-size: 0.75rem;
+  font-size: clamp(0.6rem, 0.7vw + 0.3rem, 0.8rem);
 }
 
 .tooltip-notes {
   margin-top: 0.25rem;
   font-style: italic;
   opacity: 0.85;
+}
+
+/* ==========================================================================
+   Responsive: tablets & small screens (≤640px)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .calendar-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .calendar-header-right {
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .calendar-legend {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.75rem;
+  }
+
+  .theme-toggle {
+    order: 1;
+    margin-left: auto;
+  }
+}
+
+/* ==========================================================================
+   Responsive: small phones (≤380px — iPhone 5/SE, iPhone 6 range)
+   ========================================================================== */
+
+@media (max-width: 380px) {
+  .day {
+    border-left-width: var(--day-border) !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive: large desktops (≥900px)
+   ========================================================================== */
+
+@media (min-width: 900px) {
+  .calendar {
+    max-width: 900px;
+  }
 }

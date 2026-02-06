@@ -175,6 +175,39 @@ function buildTooltipContent(dateStr) {
   return container;
 }
 
+function clampToViewport(centerX, tooltipWidth) {
+  var pad = 8;
+  var minX = pad + tooltipWidth / 2;
+  var maxX = window.innerWidth - pad - tooltipWidth / 2;
+  return Math.min(Math.max(centerX, minX), maxX);
+}
+
+function positionTooltip(tooltip, cell) {
+  var rect = cell.getBoundingClientRect();
+  var pad = 8;
+
+  tooltip.hidden = false;
+
+  var centerX = rect.left + rect.width / 2;
+  tooltip.style.left = clampToViewport(centerX, tooltip.offsetWidth) + "px";
+
+  var belowY = rect.bottom + pad;
+  var fitsBelow = belowY + tooltip.offsetHeight <= window.innerHeight - pad;
+  tooltip.style.top = fitsBelow
+    ? belowY + "px"
+    : rect.top - pad - tooltip.offsetHeight + "px";
+}
+
+function showTooltip(tooltip, cell) {
+  tooltip.innerHTML = "";
+  tooltip.appendChild(buildTooltipContent(cell.dataset.date));
+  positionTooltip(tooltip, cell);
+}
+
+function hideTooltip(tooltip) {
+  tooltip.hidden = true;
+}
+
 function initTooltips() {
   const grid = document.querySelector(".calendar-grid");
   const tooltip = document.createElement("div");
@@ -182,21 +215,13 @@ function initTooltips() {
   tooltip.hidden = true;
   document.body.appendChild(tooltip);
 
+  // Hover (desktop)
   grid.addEventListener(
     "mouseenter",
     (e) => {
       const cell = e.target.closest(".day[data-date]");
       if (!cell) return;
-
-      const dateStr = cell.dataset.date;
-
-      tooltip.innerHTML = "";
-      tooltip.appendChild(buildTooltipContent(dateStr));
-
-      const rect = cell.getBoundingClientRect();
-      tooltip.style.left = rect.left + rect.width / 2 + "px";
-      tooltip.style.top = rect.bottom + 8 + "px";
-      tooltip.hidden = false;
+      showTooltip(tooltip, cell);
     },
     true,
   );
@@ -206,10 +231,22 @@ function initTooltips() {
     (e) => {
       const cell = e.target.closest(".day[data-date]");
       if (!cell) return;
-      tooltip.hidden = true;
+      hideTooltip(tooltip);
     },
     true,
   );
+
+  // Tap (touch / mobile)
+  grid.addEventListener("click", (e) => {
+    const cell = e.target.closest(".day[data-date]");
+    if (!cell) return;
+    e.stopPropagation();
+    showTooltip(tooltip, cell);
+  });
+
+  document.addEventListener("click", () => {
+    hideTooltip(tooltip);
+  });
 }
 
 // =============================================================================
