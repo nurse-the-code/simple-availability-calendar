@@ -77,7 +77,7 @@ This project was inspired by three things from Basecamp's [dot grid calendar cas
 - [Vitest](https://vitest.dev/) — test framework
 - [Prettier](https://prettier.io/) — code formatting
 - [Husky](https://typicode.github.io/husky/) — pre-commit hooks
-- [@hebcal/core](https://github.com/hebcal/hebcal-es6) — Hebrew date calculation (build-time only)
+- [@hebcal/core](https://github.com/hebcal/hebcal-es6) — Hebrew date calculation
 - [pnpm](https://pnpm.io/installation) — package manager
 - Vanilla JavaScript, CSS Grid, HTML
 
