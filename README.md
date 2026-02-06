@@ -52,7 +52,7 @@ Then open `calendar.html` in a browser. No server needed.
 
 **Globals instead of ES modules.** A consequence of the no-build constraint. It works, but the `typeof` guards for browser/Node compatibility are awkward.
 
-**Limited scope is deliberate.** There's no database, no holiday detection beyond Shabbos, no editing UI, no navigation between months. I originally envisioned being able to send a single HTML file to someone — no dependencies, just open it. The project outgrew that — you can still send it as a compressed directory that opens without any installation, though that's more awkward than I'd like. I also set a firm two-week deadline and cut scope to fit rather than expanding the timeline. If I continue this work, I'd probably incorporate this into a larger app with a proper database rather than continuing to grow it in place.
+**Limited scope is deliberate.** There's no database, no holiday detection beyond Shabbos, no editing UI, no navigation between months. The original vision was three files simple enough to send to someone — no dependencies, just open the HTML. That grew more complex, but you can still send it as a compressed directory that opens without any installation, though that's more awkward than I'd like. I also set a firm two-week deadline and cut scope to fit rather than expanding the timeline. If I continue this work, I'd probably incorporate this into a larger app with a proper database rather than continuing to grow it in place.
 
 **Frontend testing is a gap.** Tests cover the data and logic layer well, but there's no component testing, browser-level end-to-end testing, or accessibility testing. That's something I want to learn — it just wasn't going to happen in this project.
 
