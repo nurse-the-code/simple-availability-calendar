@@ -213,6 +213,50 @@ function initTooltips() {
 }
 
 // =============================================================================
+// Theme toggle
+// =============================================================================
+
+function getPreferredTheme() {
+  var stored = localStorage.getItem("theme");
+  if (stored === "light" || stored === "dark") return stored;
+  return null; // let CSS prefers-color-scheme handle it
+}
+
+function applyTheme(theme) {
+  if (theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+  } else {
+    document.documentElement.removeAttribute("data-theme");
+  }
+  var btn = document.querySelector(".theme-toggle");
+  if (btn) {
+    var isDark =
+      theme === "dark" ||
+      (!theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    btn.textContent = isDark ? "\u2600" : "\u263D";
+    btn.setAttribute(
+      "aria-label",
+      isDark ? "Switch to light mode" : "Switch to dark mode",
+    );
+  }
+}
+
+function initThemeToggle() {
+  applyTheme(getPreferredTheme());
+  var btn = document.querySelector(".theme-toggle");
+  if (!btn) return;
+  btn.addEventListener("click", function () {
+    var current = document.documentElement.getAttribute("data-theme");
+    var isDark =
+      current === "dark" ||
+      (!current && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var next = isDark ? "light" : "dark";
+    localStorage.setItem("theme", next);
+    applyTheme(next);
+  });
+}
+
+// =============================================================================
 // Initialization
 // =============================================================================
 
@@ -220,6 +264,7 @@ function initCalendar() {
   renderHeader();
   renderGrid();
   initTooltips();
+  initThemeToggle();
 }
 
 if (typeof document !== "undefined") {

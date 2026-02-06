@@ -1,3 +1,126 @@
+/* ==========================================================================
+   Terminal Hacker Theme — Light & Dark Mode
+   ========================================================================== */
+
+/* --- Color tokens (light mode default) --- */
+:root {
+  --bg: #d8dcd8;
+  --surface: #eef0ee;
+  --surface-dim: #d0d4d0;
+  --border: #4a7a4a;
+  --border-dim: #c0c8c0;
+  --text: #1a1a1a;
+  --text-dim: #2e3e2e;
+  --accent: #0a5a1a;
+
+  --available-bg: #a8e4b0;
+  --available-text: #004a25;
+  --available-border: #2a9545;
+
+  --partial-bg: #fef3b0;
+  --partial-text: #585200;
+  --partial-border: #ccbb00;
+
+  --unavailable-bg: #f2e4e4;
+  --unavailable-text: #803030;
+  --unavailable-border: #b07878;
+
+  --nodata-bg: #d0d4d0;
+  --nodata-text: #3a3a3a;
+  --nodata-border: #9a9a9a;
+
+  --tooltip-bg: #1a1a1a;
+  --tooltip-text: #e0e0e0;
+  --tooltip-border: #4a7a4a;
+  --tooltip-accent: #4ade80;
+
+  --focus-ring: #0a5a1a;
+  --glow: none;
+  --shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+  --day-border: 2px;
+  --day-border-left: 6px;
+}
+
+/* --- Dark mode --- */
+[data-theme="dark"] {
+  --bg: #0a0a0a;
+  --surface: #0d1a0d;
+  --surface-dim: #111a11;
+  --border: #1a5a1a;
+  --border-dim: #162016;
+  --text: #b0c4b0;
+  --text-dim: #90b090;
+  --accent: #00e639;
+
+  --available-bg: #0d380d;
+  --available-text: #4ade80;
+  --available-border: #309030;
+
+  --partial-bg: #333000;
+  --partial-text: #ffee00;
+  --partial-border: #aaaa00;
+
+  --unavailable-bg: #2d1010;
+  --unavailable-text: #e89090;
+  --unavailable-border: #653030;
+
+  --nodata-bg: #1a1a1a;
+  --nodata-text: #aaa;
+  --nodata-border: #4a4a4a;
+
+  --tooltip-bg: #111;
+  --tooltip-text: #b0c4b0;
+  --tooltip-border: #2a7a2a;
+  --tooltip-accent: #00e639;
+
+  --focus-ring: #00e639;
+  --glow: 0 0 12px rgba(0, 230, 57, 0.15);
+  --shadow: none;
+}
+
+/* System preference fallback (when no explicit data-theme) */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --bg: #0a0a0a;
+    --surface: #0d1a0d;
+    --surface-dim: #111a11;
+    --border: #1a5a1a;
+    --border-dim: #162016;
+    --text: #b0c4b0;
+    --text-dim: #90b090;
+    --accent: #00e639;
+
+    --available-bg: #0d380d;
+    --available-text: #4ade80;
+    --available-border: #309030;
+
+    --partial-bg: #333000;
+    --partial-text: #ffee00;
+    --partial-border: #aaaa00;
+
+    --unavailable-bg: #2d1010;
+    --unavailable-text: #e89090;
+    --unavailable-border: #653030;
+
+    --nodata-bg: #1a1a1a;
+    --nodata-text: #aaa;
+    --nodata-border: #4a4a4a;
+
+    --tooltip-bg: #111;
+    --tooltip-text: #b0c4b0;
+    --tooltip-border: #2a7a2a;
+    --tooltip-accent: #00e639;
+
+    --focus-ring: #00e639;
+    --glow: 0 0 12px rgba(0, 230, 57, 0.15);
+    --shadow: none;
+  }
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,26 +129,36 @@
 
 body {
   font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background: #f5f5f5;
+    "Fira Code", "JetBrains Mono", "Cascadia Code", "Source Code Pro",
+    "Courier New", monospace;
+  background: var(--bg);
+  color: var(--text);
   padding: 2rem;
 }
+
+/* ==========================================================================
+   Calendar card
+   ========================================================================== */
 
 .calendar {
   max-width: 700px;
   margin: 0 auto;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--glow), var(--shadow);
   overflow: hidden;
 }
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
 
 .calendar-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border);
 }
 
 .calendar-header-left {
@@ -33,75 +166,135 @@ body {
 }
 
 .calendar-title {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
 }
 
 .calendar-range-gregorian {
-  color: #555;
-  font-size: 0.95rem;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-top: 0.4rem;
 }
 
 .calendar-range-hebrew {
-  color: #777;
-  font-size: 0.85rem;
-  margin-top: 0.25rem;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
 }
+
+.calendar-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+/* ==========================================================================
+   Theme toggle
+   ========================================================================== */
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 1.1rem;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-dim);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Grid
+   ========================================================================== */
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  background: #e0e0e0;
-  padding: 1px;
+  gap: 3px;
+  background: var(--border-dim);
+  padding: 3px;
 }
 
 .day-label {
-  background: #f8f8f8;
+  background: var(--surface-dim);
   padding: 0.75rem;
   text-align: center;
   font-weight: 600;
-  font-size: 0.85rem;
-  color: #555;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
+/* ==========================================================================
+   Day cells
+   ========================================================================== */
+
 .day {
-  background: white;
+  background: var(--surface);
   padding: 1rem;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   min-height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: 500;
 }
 
 .day.available {
-  background: #c8e6c9;
-  color: #2e7d32;
+  background: var(--available-bg);
+  color: var(--available-text);
+  border: var(--day-border) solid var(--available-border);
+  border-left-width: var(--day-border-left);
 }
 
 .day.partial {
-  background: #fff9c4;
-  color: #f9a825;
+  background: var(--partial-bg);
+  color: var(--partial-text);
+  border: var(--day-border) solid var(--partial-border);
+  border-left-width: var(--day-border-left);
 }
 
 .day.unavailable {
-  background: #ffcdd2;
-  color: #c62828;
+  background: var(--unavailable-bg);
+  color: var(--unavailable-text);
+  border: var(--day-border) solid var(--unavailable-border);
+  border-left-width: var(--day-border-left);
 }
 
 .day.no-data {
-  background: #eeeeee;
-  color: #757575;
+  background: var(--nodata-bg);
+  color: var(--nodata-text);
+  border: var(--day-border) solid var(--nodata-border);
+  border-left-width: var(--day-border-left);
 }
+
+.day:hover {
+  filter: brightness(1.15);
+}
+
+/* ==========================================================================
+   Legend
+   ========================================================================== */
 
 .calendar-legend {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .legend-item {
@@ -113,34 +306,39 @@ body {
 .legend-color {
   width: 14px;
   height: 14px;
-  border-radius: 3px;
+  border: 1px solid var(--border-dim);
 }
 
 .legend-color.available {
-  background: #c8e6c9;
+  background: var(--available-border);
 }
 
 .legend-color.partial {
-  background: #fff9c4;
+  background: var(--partial-border);
 }
 
 .legend-color.unavailable {
-  background: #ffcdd2;
+  background: var(--unavailable-border);
 }
 
 .legend-color.no-data {
-  background: #eeeeee;
+  background: var(--nodata-border);
 }
+
+/* ==========================================================================
+   Tooltip
+   ========================================================================== */
 
 .tooltip {
   position: fixed;
   transform: translateX(-50%);
-  background: #333;
-  color: white;
+  background: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  border: 1px solid var(--tooltip-border);
   padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  font-family: inherit;
+  font-size: 0.8rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   pointer-events: none;
 }
@@ -151,15 +349,15 @@ body {
 
 .tooltip-date {
   font-weight: 600;
+  color: var(--tooltip-accent);
 }
 
 .tooltip-hebrew {
-  opacity: 0.85;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 .tooltip-notes {
   margin-top: 0.25rem;
   font-style: italic;
-  opacity: 0.9;
+  opacity: 0.85;
 }
