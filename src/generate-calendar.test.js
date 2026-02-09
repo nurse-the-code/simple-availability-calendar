@@ -1,5 +1,14 @@
 import { describe, it, expect } from "vitest";
-import { generateDates, serializeDatesFile } from "./generate-dates.js";
+import fs from "fs";
+import os from "os";
+import path from "path";
+import {
+  generateDates,
+  serializeDatesFile,
+  resolveDest,
+  validateDest,
+  deployCalendar,
+} from "./generate-calendar.js";
 
 describe("generateDates", () => {
   it("returns all 28 days for Feb 2026 (Sunday start, Saturday end)", async () => {
@@ -76,5 +85,75 @@ describe("serializeDatesFile", () => {
     const result = serializeDatesFile(data);
 
     expect(result).toBe(serializedOneWeek);
+  });
+});
+
+describe("deployCalendar", () => {
+  it("writes all required files to the destination", async () => {
+    const dest = fs.mkdtempSync(path.join(os.tmpdir(), "cal-test-"));
+    try {
+      await deployCalendar("2026-02-01", "2026-02-07", dest);
+
+      expect(fs.existsSync(path.join(dest, "calendar.html"))).toBe(true);
+      expect(fs.existsSync(path.join(dest, "calendar.css"))).toBe(true);
+      expect(fs.existsSync(path.join(dest, "calendar-dates.js"))).toBe(true);
+      expect(fs.existsSync(path.join(dest, "calendar-statuses.js"))).toBe(true);
+      expect(fs.existsSync(path.join(dest, "src", "date-helpers.js"))).toBe(
+        true,
+      );
+      expect(fs.existsSync(path.join(dest, "src", "calendar.js"))).toBe(true);
+    } finally {
+      fs.rmSync(dest, { recursive: true });
+    }
+  });
+
+  it("does not overwrite existing calendar-statuses.js", async () => {
+    const dest = fs.mkdtempSync(path.join(os.tmpdir(), "cal-test-"));
+    try {
+      await deployCalendar("2026-02-01", "2026-02-07", dest);
+      fs.writeFileSync(path.join(dest, "calendar-statuses.js"), "my edits");
+      await deployCalendar("2026-02-01", "2026-02-07", dest);
+
+      expect(
+        fs.readFileSync(path.join(dest, "calendar-statuses.js"), "utf-8"),
+      ).toBe("my edits");
+    } finally {
+      fs.rmSync(dest, { recursive: true });
+    }
+  });
+});
+
+describe("validateDest", () => {
+  it("throws when parent directory does not exist", () => {
+    expect(() => validateDest("/nonexistent/parent/calendar")).toThrow(
+      "does not exist",
+    );
+  });
+
+  it("does not throw when parent directory exists", () => {
+    expect(() =>
+      validateDest(path.join(os.tmpdir(), "new-calendar")),
+    ).not.toThrow();
+  });
+
+  it("does not throw when dest itself already exists", () => {
+    const dest = fs.mkdtempSync(path.join(os.tmpdir(), "cal-test-"));
+    try {
+      expect(() => validateDest(dest)).not.toThrow();
+    } finally {
+      fs.rmSync(dest, { recursive: true });
+    }
+  });
+});
+
+describe("resolveDest", () => {
+  it("expands ~/path to home directory", () => {
+    expect(resolveDest("~/calendars/adar")).toBe(
+      path.join(os.homedir(), "calendars", "adar"),
+    );
+  });
+
+  it("expands bare ~ to home directory", () => {
+    expect(resolveDest("~")).toBe(os.homedir());
   });
 });

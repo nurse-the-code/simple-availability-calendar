@@ -64,7 +64,7 @@ function padToSaturday(date) {
 
 function validateDateRange(startDate, endDate) {
   if (!startDate || !endDate) {
-    throw new Error("Usage: generate-dates <start-date> <end-date>");
+    throw new Error("Start date and end date are required");
   }
 
   const datePattern = /^\d{4}-\d{2}-\d{2}$/;

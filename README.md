@@ -19,22 +19,20 @@ I built this to give freelance and consulting clients a clear, at-a-glance pictu
 
 ## Usage
 
-You'll need [pnpm](https://pnpm.io/installation) installed. Once you have it, install dependencies and generate the date range you want to display:
+You'll need [pnpm](https://pnpm.io/installation) installed. Once you have it, install dependencies and generate a calendar with the date range you want to display:
 
 ```bash
 pnpm install
-pnpm generate-dates 2026-02-01 2026-04-04  # YYYY-MM-DD format
+pnpm generate-calendar 2026-02-01 2026-04-04 ./my-calendar  # YYYY-MM-DD format
 ```
 
-Next, create your statuses file by copying the example:
+This creates a self-contained calendar at the destination with all the files needed to run, including a starter `calendar-statuses.js`.
 
-```bash
-cp calendar-statuses.example.js calendar-statuses.js
-```
+Edit `calendar-statuses.js` in the destination to fill in your availability — the examples in that file show the format for each status type and how to add notes.
 
-Edit `calendar-statuses.js` to fill in your availability. The example file shows the format for each status type and how to add notes. The generated `calendar-dates.js` and your `calendar-statuses.js` are both gitignored, so your personal data won't be committed.
+Open `calendar.html` from the destination in a browser. No server needed.
 
-Finally, open `calendar.html` in a browser. No server needed.
+Re-running with the same destination will update the date range without overwriting your `calendar-statuses.js` edits.
 
 ## Design decisions
 

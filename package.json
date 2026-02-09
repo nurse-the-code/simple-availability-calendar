@@ -4,7 +4,7 @@
   "description": "A static availability calendar that runs locally without a server",
   "scripts": {
     "test": "vitest",
-    "generate-dates": "node src/generate-dates.js",
+    "generate-calendar": "node src/generate-calendar.js",
     "prepare": "husky"
   },
   "keywords": [
